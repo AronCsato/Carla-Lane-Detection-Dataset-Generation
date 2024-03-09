@@ -220,15 +220,16 @@ class CarlaGame():
             self.camera_transforms = [carla.Transform(carla.Location(x=-4.5, z=2.2), carla.Rotation(pitch=-14.5)),
                                       carla.Transform(carla.Location(x=-4.0, z=2.2), carla.Rotation(pitch=-18.0))]
         else:
-            self.camera_transforms = [carla.Transform(carla.Location(x=0.0, z=3.2), carla.Rotation(pitch=-19.5)), # camera 1
-                                      carla.Transform(carla.Location(x=0.0, z=2.8), carla.Rotation(pitch=-18.5)), # camera 2
-                                      carla.Transform(carla.Location(x=0.3, z=2.4), carla.Rotation(pitch=-15.0)), # camera 3
-                                      carla.Transform(carla.Location(x=1.1, z=2.0), carla.Rotation(pitch=-16.5)), # camera 4
-                                      carla.Transform(carla.Location(x=1.0, z=2.0), carla.Rotation(pitch=-18.5)), # camera 5
-                                      carla.Transform(carla.Location(x=1.4, z=1.2), carla.Rotation(pitch=-13.5)), # camera 6
-                                      carla.Transform(carla.Location(x=1.8, z=1.2), carla.Rotation(pitch=-14.5)), # camera 7
-                                      carla.Transform(carla.Location(x=2.17, z=0.9), carla.Rotation(pitch=-14.5)), # camera 8
-                                      carla.Transform(carla.Location(x=2.2, z=0.7), carla.Rotation(pitch=-11.5))] # camera 9   
+            # self.camera_transforms = [carla.Transform(carla.Location(x=0.0, z=3.2), carla.Rotation(pitch=-19.5)), # camera 1
+            #                           carla.Transform(carla.Location(x=0.0, z=2.8), carla.Rotation(pitch=-18.5)), # camera 2
+            #                           carla.Transform(carla.Location(x=0.3, z=2.4), carla.Rotation(pitch=-15.0)), # camera 3
+            #                           carla.Transform(carla.Location(x=1.1, z=2.0), carla.Rotation(pitch=-16.5)), # camera 4
+            #                           carla.Transform(carla.Location(x=1.0, z=2.0), carla.Rotation(pitch=-18.5)), # camera 5
+            #                           carla.Transform(carla.Location(x=1.4, z=1.2), carla.Rotation(pitch=-13.5)), # camera 6
+            #                           carla.Transform(carla.Location(x=1.8, z=1.2), carla.Rotation(pitch=-14.5)), # camera 7
+            #                           carla.Transform(carla.Location(x=2.17, z=0.9), carla.Rotation(pitch=-14.5)), # camera 8
+            #                           carla.Transform(carla.Location(x=2.2, z=0.7), carla.Rotation(pitch=-11.5))] # camera 9
+            self.camera_transforms = [carla.Transform(carla.Location(x=-3, z=2.5))]   
         
 
     def reset_vehicle_position(self):
