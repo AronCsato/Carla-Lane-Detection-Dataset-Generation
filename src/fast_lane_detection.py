@@ -29,6 +29,8 @@ import os
 import sys
 import math
 import random
+import re
+import time
 
 try:
     sys.path.append(glob.glob('../../carla/dist/carla-*%d.%d-%s.egg' % (
@@ -115,6 +117,12 @@ def should_quit():
 
     return False
 
+def find_weather_presets():
+    rgx = re.compile('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)')
+    name = lambda x: ' '.join(m.group(0) for m in rgx.finditer(x))
+    presets = [x for x in dir(carla.WeatherParameters) if re.match('[A-Z].+', x)]
+    return [(getattr(carla.WeatherParameters, x), name(x)) for x in presets]
+
 
 # ==============================================================================
 # -- CarlaSyncMode ------------------------------------------------------------
@@ -194,6 +202,10 @@ class CarlaGame():
         
         self.world = self.client.load_world(cfg.CARLA_TOWN)
         self.map = self.world.get_map()
+
+        #Weather
+        self._weather_index = 0
+        self._weather_presets = find_weather_presets()
         
         # Hide all objects on the map and show street only
         # self.world.unload_map_layer(carla.MapLayer.All)
@@ -226,6 +238,8 @@ class CarlaGame():
         """
         self.start_position = random.choice(self.map.get_spawn_points())
         waypoint = self.map.get_waypoint(self.start_position.location)
+        #Weather
+        self.next_weather()
 
         # Initialize lane deques with a fixed number of lanepoints
         for lane in lanes:
@@ -253,6 +267,12 @@ class CarlaGame():
                 for j in range(0, number_of_lanepoints - 1):
                     self.lanemarkings.draw_lanes(self.client, lane_markings[i][j], lane_markings[i][j + 1], self.lanemarkings.colormap_carla[color])
     
+    def next_weather(self, reverse=False):
+        self._weather_index += -1 if reverse else 1
+        self._weather_index %= len(self._weather_presets)
+        preset = self._weather_presets[self._weather_index]
+        self.display.blit(self.font.render('Weather: %s' % preset[1], True, (255, 255, 255)), (20, 70))
+        self.client.get_world().set_weather(preset[0])
 
     def detect_lanemarkings(self, new_waypoint, image_semseg):
         """
@@ -338,7 +358,7 @@ class CarlaGame():
         self.blueprint_library = self.world.get_blueprint_library()
 
         self.start_position = random.choice(self.map.get_spawn_points())
-        self.vehicle = self.world.spawn_actor(random.choice(self.blueprint_library.filter('vehicle.mustang.mustang')), self.start_position)
+        self.vehicle = self.world.spawn_actor(random.choice(self.blueprint_library.filter('vehicle.tesla.model3')), self.start_position)
         self.actor_list.append(self.vehicle)
         self.vehicle.set_simulate_physics(False)
         
