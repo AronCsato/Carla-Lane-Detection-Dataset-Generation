@@ -14,7 +14,7 @@ isSaving = True
 # Keep own vehicle either in center of road or oscillate between lanemarkings
 isCenter = True
 # Draw all lanes in carla simulator
-draw3DLanes = False
+draw3DLanes = True
 # Calculate and draw 3D Lanes on Juction
 junctionMode = True
 # Third-person view for the ego vehicle
@@ -31,7 +31,7 @@ images_until_respawn = 350
 # Distance between the calculated lanepoints
 meters_per_frame = 1.0
 # Total length of a lane_list
-number_of_lanepoints = 80
+number_of_lanepoints = 250
 # Max size of images per folder
 max_files_per_classification = 2000
 
